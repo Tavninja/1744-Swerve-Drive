@@ -54,9 +54,6 @@ public class Robot extends TimedRobot {
   AnalogEncoder backLeftEncoder = new AnalogEncoder(2);
   AnalogEncoder backRightEncoder = new AnalogEncoder(3);
  
-  frontLeftEncoder.setPositionOffset(0.1);
- 
- 
 //length and width to wheels?
  
   double L = 1;
@@ -90,10 +87,10 @@ public class Robot extends TimedRobot {
  
     //wanted angle
  
-    double wantedFrontLeftAngle = ((Math.atan2(a,d)/Math.PI)/2)+.5;
-    double wantedFrontRightAngle =((Math.atan2(a,c) / Math.PI)/2)+.5;
-    double wantedBackLeftAngle = ((Math.atan2(b,d) / Math.PI)/2)+.5;
-    double wantedBackRightAngle = ((Math.atan2(b,c) / Math.PI)/2)+.5;
+    double wantedFrontLeftAngle = (Math.atan2(a,d)*(180/Math.PI))+180;
+    double wantedFrontRightAngle =(Math.atan2(a,c)* (180/Math.PI))+180;
+    double wantedBackLeftAngle = (Math.atan2(b,d)* (180/Math.PI))+180;
+    double wantedBackRightAngle = (Math.atan2(b,c)* (180/Math.PI))+180;
  
     //set power
  
@@ -104,10 +101,10 @@ public class Robot extends TimedRobot {
  
     //get encoder angle
  
-    double RealFrontLeftAngle = (frontLeftEncoder.getAbsolutePosition());
-    double RealFrontRightAngle = (frontRightEncoder.getAbsolutePosition());
-    double RealBackLeftAngle = (backLeftEncoder.getAbsolutePosition());
-    double RealBackRightAngle = (backRightEncoder.getAbsolutePosition());
+    double RealFrontLeftAngle = ((frontLeftEncoder.getAbsolutePosition()*360)+20.9);
+    double RealFrontRightAngle = ((frontRightEncoder.getAbsolutePosition()*360)+18);
+    double RealBackLeftAngle = ((backLeftEncoder.getAbsolutePosition()*360)-2);
+    double RealBackRightAngle = ((backRightEncoder.getAbsolutePosition()*360)-.6);
  
     //display wanted angles
     SmartDashboard.putNumber("Wanted Front Left Angle", wantedFrontLeftAngle);
@@ -171,7 +168,16 @@ public class Robot extends TimedRobot {
  
   /** This function is called once when the robot is disabled. */
   @Override
-  public void disabledInit() {}
+  public void disabledInit() {
+
+    frontLeftEncoder.setPositionOffset(0.06);
+    frontRightEncoder.setPositionOffset(0.05);
+    backLeftEncoder.setPositionOffset(0);
+    backRightEncoder.setPositionOffset(0);
+
+
+
+  }
  
   /** This function is called periodically when disabled. */
   @Override
